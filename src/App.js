@@ -8,14 +8,17 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       query: '',
       imdbUrl: 'http://www.imdb.com/',
-      details: 'Test data'
+      details: [],
     };
+
     // this.getMovies = this.getMovies.bind(this);
-    this.setQuery = this.setQuery.bind(this);
     // this.updateKeyword = this.updateKeyword.bind(this);
+    this.setQuery = this.setQuery.bind(this);
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
 // getMovies(query) {
@@ -37,10 +40,35 @@ class App extends Component {
 //       })
 // }
 
+  /**
+   * Méthode pour mettre à jour le state 
+   * lorsque la valeur de l'input
+   * est modifiée
+   */
   setQuery(userInput) {
     this.setState({
       query: userInput
     })
+  }
+
+  /**
+   * Méthode pour faire la requête
+   * au clic du bouton Submit
+   */
+  onSubmit(e) {
+    e.preventDefault() // disable default click behavior
+
+    const { query } = this.state
+    const url = `http://www.omdbapi.com/?apikey=e0a2c4ef&type=movie&page=2&r=json&s=${query}`
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data.Search && data.Search.length > 0) {
+          this.setState({ details: data.Search })
+        }
+      })
+      .catch(err => console.log('err', err))
   }
 
   render() {
@@ -53,8 +81,15 @@ class App extends Component {
         <h2 className="App-intro">
           To search for a movie, just type in your query and enjoy ;).
         </h2>
-        <SearchForm onClick={this.setQuery} />
-        <MovieDisplay query={this.state.query} imdb={this.state.imdbUrl} details={this.state.details}/>
+        <SearchForm
+          onClick={this.onSubmit}
+          onChange={this.setQuery}
+        />
+        <MovieDisplay
+          query={this.state.query}
+          imdb={this.state.imdbUrl}
+          details={this.state.details}
+        />
     </div>
     );
   }
