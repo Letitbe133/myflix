@@ -10,7 +10,7 @@ class MovieDisplay extends Component {
     const { query, imdb, details } = this.props
 
     return (
-      <div id="movie" className={details.length > 0 ? "MovieDisplay-visible" : "MovieDisplay-none" }>
+      <div id="movie" className={!!details.length ? "MovieDisplay-visible" : "MovieDisplay-none" }>
         <h3>You searched for "{query}". Retrieving data from <a href={imdb} target="blank">IMDb...</a></h3>
         <ul>
         {
