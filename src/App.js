@@ -12,34 +12,13 @@ class App extends Component {
 
     this.state = {
       query: '',
-      imdbUrl: 'http://www.imdb.com/',
-      details: [],
+      tmdbUrl: 'http://www.themoviedb.org/',
+      queryResults: [],
     };
 
-    // this.getMovies = this.getMovies.bind(this);
-    // this.updateKeyword = this.updateKeyword.bind(this);
     this.setQuery = this.setQuery.bind(this);
     this.onSubmit = this.onSubmit.bind(this)
   }
-
-// getMovies(query) {
-//   // OMDb API
-//   // key = e0a2c4ef
-//   // endpoint = http://www.omdbapi.com/?apikey=[yourkey]&
-//   const url = "http://www.omdbapi.com/?apikey=e0a2c4ef&type=movie&page=2&r=json&s=" + query;
-//   fetch(url)
-//       .then((response) => response.json())
-//       .then(function(data) {
-//           let items = data.Search;
-//           // items.map(function(item) {
-//           //     console.log(item);
-//           // })
-//           return items;
-//       })
-//       .catch(function(err) {
-//           console.log(err);
-//       })
-// }
 
   /**
    * Méthode pour mettre à jour le state 
@@ -63,25 +42,14 @@ class App extends Component {
     // API key : api_key=039009afb934eb20795c0fe1d646eeb4
     // Endpoint : https://api.themoviedb.org/3/
 
-    // const { query } = this.state
-    // const url = https://api.themoviedb.org/3/discover/movie?api_key=039009afb934eb20795c0fe1d646eeb4&with_keywords=${query}
-    // fetch(url)
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     if (!!data.results.length) {
-    //       this.setState({details: data.results})
-    //     }
-    //   })
-    //   .catch(err => console.log('err', err))
-
     const { query } = this.state
-    const url = `http://www.omdbapi.com/?apikey=e0a2c4ef&type=movie&page=2&r=json&s=${query}`
-
+    const api_key = "039009afb934eb20795c0fe1d646eeb4"
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${query}`
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        if (!!data.Search.length) {
-          this.setState({ details: data.Search })
+        if (!!data.results.length) {
+          this.setState({queryResults: data.results})
         }
       })
       .catch(err => console.log('err', err))
@@ -92,20 +60,18 @@ class App extends Component {
       <MuiThemeProvider>
         <div className="App">
             <header className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
+              <img src={logo} className="App-logo" alt="Welcome to MyFlix" />
               <h1 className="App-title">Welcome to My Flix</h1>
             </header>
-            {/* <h2 className="App-intro">
-              To search for a movie, just type in your query and enjoy ;).
-            </h2> */}
+            <h2>To search for a movie, just type in your query and enjoy ;)</h2>
             <SearchForm
               onClick={this.onSubmit}
               onChange={this.setQuery}
             />
             <MovieDisplay
               query={this.state.query}
-              imdb={this.state.imdbUrl}
-              details={this.state.details}
+              tmdb={this.state.tmdbUrl}
+              queryResults={this.state.queryResults}
             />
         </div>
       </MuiThemeProvider>

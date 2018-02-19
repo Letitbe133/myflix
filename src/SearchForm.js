@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Card, CardHeader} from 'material-ui/Card';
+import {Card} from 'material-ui/Card';
 
 class SearchForm extends Component {
 
     render() {
 
-        const style = {
-            margin: 50,
+        const cardStyle = {
+            marginTop: 50,
+            marginBottom: 50,
+            marginLeft:  "auto",
+            marginRight:  "auto",
+            width: "50%",
+            padding: 20
         }
 
+        const buttonRaisedStyle = {
+            marginLeft: 20
+        }
+
+
+
         return (
-            <Card style={style}>
-                <CardHeader
-                    title="To search for a movie, just type in your query and enjoy ;)."
-                    style={style}
-                />
+            <Card style={cardStyle}>
                 <div className="SearchForm">
                     <TextField hintText="What are you looking for ?" onChange={e => this.props.onChange(e.target.value)}/>
-                    <RaisedButton label="Go get it Bobby!" primary onClick={e => this.props.onClick(e)}/>
+                    <RaisedButton label="Go get it Bobby!" primary onClick={e => this.props.onClick(e)} style={buttonRaisedStyle}/>
                 </div>
             </Card>
         );

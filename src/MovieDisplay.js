@@ -1,22 +1,56 @@
 import React, { Component } from 'react';
+import {Card, CardHeader, CardMedia, CardText, CardTitle} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class MovieDisplay extends Component {
 
   render() {
-      // let query = this.props.query;
-      // let imdb = this.props.imdb;
-      // let details = this.props.details;
 
-    const { query, imdb, details } = this.props
+    const { query, tmdb, queryResults } = this.props
+
+    const styles = {
+      width: 400,
+      marginTop: 20,
+      marginBottom: 20,
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
+
+    const buttonStyle = {
+      margin: 10
+    }
 
     return (
-      <div id="movie" className={!!details.length ? "MovieDisplay-visible" : "MovieDisplay-none" }>
-        <h3>You searched for "{query}". Retrieving data from <a href={imdb} target="blank">IMDb...</a></h3>
-        <ul>
+      <div id="movie" className={!!queryResults.length ? "MovieDisplay-visible" : "MovieDisplay-none" }>
+        <h3>You searched for "{query}". Retrieving data from <a href={tmdb} target="blank">The Movie Database...</a></h3>
+        <div>
         {
-          details.map(item => <li key={item.imdbID}>{item.Title}</li>)
+          queryResults.map(item =>
+          <Card key={item.id} style={styles}>
+            <CardHeader
+              title={item.title}
+              subtitle={item.release_date}
+            />
+            <CardMedia>
+              <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} />
+            </CardMedia>
+            <CardTitle title="Overview" />
+            <CardText>
+              {(item.overview === "") ? "No overview to be displayed" : item.overview }
+            </CardText>
+            <RaisedButton
+              label="Details"
+              primary
+              style={buttonStyle}
+            />
+            <RaisedButton
+              label="Add to My Flix"
+              primary
+              style={buttonStyle}
+            />
+          </Card>)
         }
-        </ul>
+        </div>
       </div>
     )
   }
