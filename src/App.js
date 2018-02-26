@@ -14,10 +14,12 @@ class App extends Component {
       query: '',
       tmdbUrl: 'http://www.themoviedb.org/',
       queryResults: [],
+      details: [],
     };
 
     this.setQuery = this.setQuery.bind(this);
     this.onSubmit = this.onSubmit.bind(this)
+    this.onShowDetails = this.onShowDetails.bind(this)
   }
 
   /**
@@ -55,6 +57,18 @@ class App extends Component {
       .catch(err => console.log('err', err))
   }
 
+  onShowDetails(id) {
+    // e.preventDefault()
+    const api_key = "039009afb934eb20795c0fe1d646eeb4"
+    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${api_key}`
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+          this.setState({details: data})
+      })
+      .catch(err => console.log('err', err))
+  }
+
   render() {
     return (
       <MuiThemeProvider>
@@ -72,6 +86,7 @@ class App extends Component {
               query={this.state.query}
               tmdb={this.state.tmdbUrl}
               queryResults={this.state.queryResults}
+              onClick={this.onShowDetails}
             />
         </div>
       </MuiThemeProvider>

@@ -42,11 +42,13 @@ class MovieDisplay extends Component {
               label="Details"
               primary
               style={buttonStyle}
+              onClick={e => this.props.onClick(item.id)}
             />
             <RaisedButton
               label="Add to My Flix"
               primary
               style={buttonStyle}
+              // onClick={e => this.props.onClick(e)}
             />
           </Card>)
         }
