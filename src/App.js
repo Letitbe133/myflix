@@ -11,15 +11,25 @@ class App extends Component {
     super(props);
 
     this.state = {
-      query: '',
       tmdbUrl: 'http://www.themoviedb.org/',
+      query: '',
       queryResults: [],
       details: [],
+      genres: [],
     };
 
     this.setQuery = this.setQuery.bind(this);
     this.onSubmit = this.onSubmit.bind(this)
     this.onShowDetails = this.onShowDetails.bind(this)
+  }
+
+  componentDidMount() {
+    fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=039009afb934eb20795c0fe1d646eeb4&language=en-US')
+      .then(response => response.json())
+      .then(data => {
+        this.setState({genres: data.genres})
+      })
+      .catch(err => console.log('err', err))
   }
 
   /**
@@ -58,7 +68,6 @@ class App extends Component {
   }
 
   onShowDetails(id) {
-    // e.preventDefault()
     const api_key = "039009afb934eb20795c0fe1d646eeb4"
     const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${api_key}`
     fetch(url)
