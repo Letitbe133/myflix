@@ -9,7 +9,7 @@ class MovieDisplay extends Component {
     const { query, tmdb, queryResults } = this.props
 
     const styles = {
-      width: 400,
+      width: "70%",
       marginTop: 20,
       marginBottom: 20,
       marginLeft: "auto",
