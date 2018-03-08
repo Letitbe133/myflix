@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
 import logo from './movie_reel.svg';
 import SearchForm from './SearchForm';
 import MovieDisplay from './MovieDisplay';
@@ -12,6 +13,7 @@ class App extends Component {
 
     this.state = {
       tmdbUrl: 'http://www.themoviedb.org/',
+      endpoint: 'https://api.themoviedb.org/3/',
       query: '',
       queryResults: [],
       details: [],
@@ -24,7 +26,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=039009afb934eb20795c0fe1d646eeb4&language=en-US')
+    fetch(`${this.state.endpoint}genre/movie/list?api_key=039009afb934eb20795c0fe1d646eeb4&language=en-US`)
       .then(response => response.json())
       .then(data => {
         this.setState({genres: data.genres})
@@ -56,7 +58,7 @@ class App extends Component {
 
     const { query } = this.state
     const api_key = "039009afb934eb20795c0fe1d646eeb4"
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${query}`
+    const url = `${this.state.endpoint}search/movie?api_key=${api_key}&query=${query}`
     fetch(url)
       .then(response => response.json())
       .then(data => {
@@ -82,21 +84,22 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div className="App">
-            <header className="App-header">
-              <img src={logo} className="App-logo" alt="Welcome to MyFlix" />
-              <h1 className="App-title">Welcome to My Flix</h1>
-            </header>
-            <h2>To search for a movie, just type in your query and enjoy ;)</h2>
-            <SearchForm
-              onClick={this.onSubmit}
-              onChange={this.setQuery}
-            />
-            <MovieDisplay
-              query={this.state.query}
-              tmdb={this.state.tmdbUrl}
-              queryResults={this.state.queryResults}
-              onClick={this.onShowDetails}
-            />
+          <AppBar
+            title="Welcome to My Flix"
+            iconElementRight={<img src={logo} className="App-logo" alt="Welcome to MyFlix" />
+          }
+          />
+          <SearchForm
+            onClick={this.onSubmit}
+            onChange={this.setQuery}
+            genres={this.state.genres}
+          />
+          <MovieDisplay
+            query={this.state.query}
+            tmdb={this.state.tmdbUrl}
+            queryResults={this.state.queryResults}
+            onClick={this.onShowDetails}
+          />
         </div>
       </MuiThemeProvider>
 

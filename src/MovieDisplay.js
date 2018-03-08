@@ -28,8 +28,8 @@ class MovieDisplay extends Component {
           queryResults.map(item =>
           <Card key={item.id} style={styles}>
             <CardHeader
-              title={item.title}
-              subtitle={item.release_date}
+              title={`Original title : ${item.title}`}
+              subtitle={`Release date : ${item.release_date}`}
             />
             <CardMedia>
               <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} />

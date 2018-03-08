@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Card} from 'material-ui/Card';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -11,7 +10,7 @@ class SearchForm extends Component {
         super(props);
     
         this.state = {
-          value: ''
+          value: '',
         };
     
         this.handleChange = this.handleChange.bind(this);
@@ -21,33 +20,48 @@ class SearchForm extends Component {
 
     render() {
 
-        const cardStyle = {
+        const genres = this.props.genres;
+
+        const style = {
             marginTop: 50,
             marginBottom: 50,
             marginLeft:  "auto",
             marginRight:  "auto",
-            width: "50%",
-            padding: 20
+            width: "70%",
+            padding: 20,
+            display: "flex",
+            justifyContent: "space-around",
+            backgroundColor: "#757575",
+            borderRadius: 30
+        }
+
+        const fieldStyle = {
+            marginLeft: 10,
+            marginRight: 10,
         }
 
         const buttonRaisedStyle = {
             marginLeft: 20
         }
 
+
         return (
-            <Card style={cardStyle}>
-                <div className="SearchForm">
+            <div style={style}>
                     <SelectField
-                        floatingLabelText="Choose your genre"
+                        hintText="Choose your category"
                         value={this.state.value}
                         onChange={this.handleChange}
+                        style={fieldStyle}
                     >
-                            <MenuItem value={1} primaryText='test'/>
+                        {
+                            genres.map(genre => 
+                                <MenuItem value={genre.name} key={genre.id} primaryText={genre.name}/>
+                            )
+                        }
                     </SelectField>
-                    <TextField hintText="What are you looking for ?" onChange={e => this.props.onChange(e.target.value)}/>
+                    <TextField hintText="What are you looking for ?" onChange={e => this.props.onChange(e.target.value)} style={fieldStyle}/>
                     <RaisedButton label="Go get it Bobby!" primary onClick={e => this.props.onClick(e)} style={buttonRaisedStyle}/>
-                </div>
-            </Card>
+            </div>
         );
     }
 }
