@@ -28,7 +28,7 @@ class MovieList extends Component {
         maxWidth: 345,
       },
       media: {
-        height: 200,
+        height: 485,
       },
     }
 

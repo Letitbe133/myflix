@@ -41,16 +41,7 @@ class HomeScreen extends Component {
    * est modifiée
    */
   setQuery(userInput) {
-    if (!(userInput.length<=0)) {
-      this.setState({
-        errorText: "",
-        query: userInput
-      })
-    } else {
-      this.setState({
-        errorText: "This field cannot be empty"
-      })
-    }
+    this.setState({ query: userInput })
   }
 
   /**
@@ -59,10 +50,10 @@ class HomeScreen extends Component {
    */
   onSubmit(e) {
     e.preventDefault() // disable default click behavior
-
     const { query } = this.state
 
     if (!!query.length) {
+      console.log("query not empty", query)
       const url = `${this.state.endpoint}search/movie?api_key=${this.state.apiKey}&query=${query}`
       fetch(url)
         .then(response => response.json())
@@ -73,6 +64,11 @@ class HomeScreen extends Component {
           }
         })
         .catch(err => console.log('err', err))  
+    } else {
+      console.log("error empty")
+      this.setState({
+        errorText: "This field cannot be empty"
+      })
     }
   }
 
