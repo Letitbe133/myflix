@@ -1,0 +1,30 @@
+.SearchForm {
+  margin: 0 auto;
+}
+
+.SearchForm-form {
+  background-color: lightgrey;
+  margin: 0 auto;
+  padding: 20px 0 20px 0;
+}
+
+.SearchForm-form--input, .SearchForm-form--input---submit {
+  display: block;
+  font-size: 1.5em;
+  padding: 10px;
+  text-align: center;
+  margin: 20px auto;
+  border-radius: 5px;
+  border: 0px;
+}
+
+.SearchForm-form--input---submit {
+  background-color: lightgreen;
+  box-shadow: 1px 1px 1px grey;
+  transition: all 0.2s ease;
+}
+
+.SearchForm-form--input---submit:hover {
+  box-shadow: 0px 0px 0px grey;
+  cursor: pointer;
+}

@@ -1,0 +1,11 @@
+#movie {
+  margin: 20px auto;
+}
+
+.MovieDisplay-none {
+  display: none;
+}
+
+.MovieDisplay-visible {
+  display: block;
+}

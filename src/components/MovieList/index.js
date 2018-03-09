@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Card, CardHeader, CardMedia, CardText, CardTitle} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import './index.css'
+
 class MovieList extends Component {
 
   render() {
