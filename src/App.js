@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import logo from './movie_reel.svg';
-import SearchForm from './SearchForm';
-import MovieDisplay from './MovieDisplay';
+import SearchBar from './SearchBar';
+import MovieList from './MovieList';
+import MovieSingle from './MovieSingle';
 import './App.css';
 
 class App extends Component {
@@ -14,10 +15,12 @@ class App extends Component {
     this.state = {
       tmdbUrl: 'http://www.themoviedb.org/',
       endpoint: 'https://api.themoviedb.org/3/',
+      apiKey: "039009afb934eb20795c0fe1d646eeb4",
       query: '',
       queryResults: [],
       details: [],
       genres: [],
+      errorText: ""
     };
 
     this.setQuery = this.setQuery.bind(this);
@@ -26,7 +29,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch(`${this.state.endpoint}genre/movie/list?api_key=039009afb934eb20795c0fe1d646eeb4&language=en-US`)
+    fetch(`${this.state.endpoint}genre/movie/list?api_key=${this.state.apiKey}&language=en-US`)
       .then(response => response.json())
       .then(data => {
         this.setState({genres: data.genres})
@@ -40,9 +43,16 @@ class App extends Component {
    * est modifiée
    */
   setQuery(userInput) {
-    this.setState({
-      query: userInput
-    })
+    if (!(userInput.length<=0)) {
+      this.setState({
+        errorText: "",
+        query: userInput
+      })
+    } else {
+      this.setState({
+        errorText: "This field cannot be empty"
+      })
+    }
   }
 
   /**
@@ -52,26 +62,23 @@ class App extends Component {
   onSubmit(e) {
     e.preventDefault() // disable default click behavior
 
-    // Tmdb API
-    // API key : api_key=039009afb934eb20795c0fe1d646eeb4
-    // Endpoint : https://api.themoviedb.org/3/
-
     const { query } = this.state
-    const api_key = "039009afb934eb20795c0fe1d646eeb4"
-    const url = `${this.state.endpoint}search/movie?api_key=${api_key}&query=${query}`
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        if (!!data.results.length) {
-          this.setState({queryResults: data.results})
-        }
-      })
-      .catch(err => console.log('err', err))
+
+    if (!!query.length) {
+      const url = `${this.state.endpoint}search/movie?api_key=${this.state.apiKey}&query=${query}`
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (!!data.results.length) {
+            this.setState({queryResults: data.results})
+          }
+        })
+        .catch(err => console.log('err', err))  
+    }
   }
 
   onShowDetails(id) {
-    const api_key = "039009afb934eb20795c0fe1d646eeb4"
-    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${api_key}`
+    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${this.state.apiKey}`
     fetch(url)
       .then(response => response.json())
       .then(data => {
@@ -89,17 +96,22 @@ class App extends Component {
             iconElementRight={<img src={logo} className="App-logo" alt="Welcome to MyFlix" />
           }
           />
-          <SearchForm
+          <SearchBar
             onClick={this.onSubmit}
             onChange={this.setQuery}
             genres={this.state.genres}
+            value={this.state.query}
+            errorText={this.state.errorText}
           />
-          <MovieDisplay
+          <MovieList
             query={this.state.query}
             tmdb={this.state.tmdbUrl}
             queryResults={this.state.queryResults}
             onClick={this.onShowDetails}
           />
+          {/* <MovieSingle 
+            details={this.state.details}
+          /> */}
         </div>
       </MuiThemeProvider>
 
