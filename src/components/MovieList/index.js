@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import {Card, CardHeader, CardMedia, CardText, CardTitle} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
+import React, { Component } from 'react'
+import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
+import Button from 'material-ui/Button'
+import Typography from 'material-ui/Typography'
 
 import './index.css'
 
@@ -10,16 +11,25 @@ class MovieList extends Component {
 
     const { query, tmdb, queryResults } = this.props
 
-    const styles = {
-      width: "70%",
-      marginTop: 20,
-      marginBottom: 20,
-      marginLeft: "auto",
-      marginRight: "auto"
-    }
+    // const stylesOld = {
+    //   width: "70%",
+    //   marginTop: 20,
+    //   marginBottom: 20,
+    //   marginLeft: "auto",
+    //   marginRight: "auto"
+    // }
 
-    const buttonStyle = {
-      margin: 10
+    // const buttonStyle = {
+    //   margin: 10
+    // }
+
+    const styles = {
+      card: {
+        maxWidth: 345,
+      },
+      media: {
+        height: 200,
+      },
     }
 
     return (
@@ -27,32 +37,47 @@ class MovieList extends Component {
         <h3>You searched for "{query}". Retrieving data from <a href={tmdb} target="blank">The Movie Database...</a></h3>
         <div>
         {
-          queryResults.map(item =>
-          <Card key={item.id} style={styles}>
-            <CardHeader
-              title={`Original title : ${item.title}`}
-              subtitle={`Release date : ${item.release_date}`}
-            />
-            <CardMedia>
-              <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} />
-            </CardMedia>
-            <CardTitle title="Overview" />
-            <CardText>
-              {(item.overview === "") ? "No overview to be displayed" : item.overview }
-            </CardText>
-            <RaisedButton
-              label="Details"
-              primary
-              style={buttonStyle}
-              onClick={e => this.props.onClick(item.id)}
-            />
-            <RaisedButton
-              label="Add to My Flix"
-              primary
-              style={buttonStyle}
-              // onClick={e => this.props.onClick(e)}
-            />
-          </Card>)
+          queryResults.map(item => (
+            <Card style={styles.card} key={item.id}>
+            { item.poster_path ? 
+              <CardMedia
+                style={styles.media}
+                image={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                title={item.title}
+              /> :
+              null
+            }
+              <CardContent>
+                <Typography variant="headline" component="h2">
+                  {`Original title : ${item.title}`}
+                </Typography>
+                <Typography component="p">
+                  {`Release date : ${item.release_date}`}
+                </Typography>
+                <Typography component="p">
+                  {(item.overview === "") ? "No overview to be displayed" : item.overview }
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="raised"
+                  onClick={e => this.props.onClick(item.id)}
+                >
+                  Details
+                </Button>
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="raised"
+                >
+                Add to My Flix
+                </Button>
+              </CardActions>
+            </Card>
+          )
+        )
         }
         </div>
       </div>
@@ -77,4 +102,4 @@ class MovieList extends Component {
  }
  */
 
-export default MovieList;
+export default MovieList

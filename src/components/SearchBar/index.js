@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import React, { Component } from 'react'
+import TextField from 'material-ui/TextField'
+import Button from 'material-ui/Button'
+
 // import SelectField from 'material-ui/SelectField';
 // import MenuItem from 'material-ui/MenuItem';
 
@@ -41,25 +42,32 @@ class SearchBar extends Component {
             },
             buttonRaisedStyle: {
                 marginLeft: 20
-            }
+            },
+            textField: {
+                width: 200,
+            },
         }
 
         return (
             <div style={styles.container}>
                 <TextField
-                    floatingLabelText="What are you looking for ?"
-                    hintText="What are you looking for ?"
-                    onChange={e => this.props.onChange(e.target.value)}
-                    style={styles.fieldStyle}
+                    id="search-input"
+                    label="What are you looking for ?"
+                    placeholder="What are you looking for ?"
+                    style={styles.textField}
+                    margin="normal"
                     value={this.props.value}
-                    errorText={this.props.errorText}
+                    onChange={e => this.props.onChange(e.target.value)}
+                    //errorText={this.props.errorText}
                 />
-                <RaisedButton
-                    label="Go get it Bobby!"
-                    primary
+                <Button
+                    color="primary"
+                    variant="raised"
                     onClick={e => this.props.onClick(e)}
                     style={styles.buttonRaisedStyle}
-                />
+                >
+                Go get it Bobby!
+                </Button>
             </div>
         );
     }
@@ -81,4 +89,4 @@ class SearchBar extends Component {
  */
 
 
-export default SearchBar;
+export default SearchBar

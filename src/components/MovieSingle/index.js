@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import {Card, CardHeader, CardMedia, CardText, CardTitle} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
+import React, { Component } from 'react'
+import {Card, CardHeader, CardMedia, CardText, CardTitle} from 'material-ui/Card'
 
 class MovieSingle extends Component {
 

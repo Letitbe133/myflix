@@ -67,6 +67,7 @@ class HomeScreen extends Component {
       fetch(url)
         .then(response => response.json())
         .then(data => {
+          console.log('data', data)
           if (!!data.results.length) {
             this.setState({queryResults: data.results})
           }
