@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import React, { Component } from 'react'
+import TextField from 'material-ui/TextField'
+import Button from 'material-ui/Button'
+
 // import SelectField from 'material-ui/SelectField';
 // import MenuItem from 'material-ui/MenuItem';
+
+import './index.css'
 
 class SearchBar extends Component {
 
@@ -23,15 +26,13 @@ class SearchBar extends Component {
         // const genres = this.props.genres;
 
         const styles = {
-            divStyle: {
-                marginTop: 50,
-                marginBottom: 50,
-                marginLeft:  "auto",
-                marginRight:  "auto",
+            container: {
                 width: "70%",
                 padding: 20,
-                // display: "flex",
-                // justifyContent: "space-around",
+                display: "flex",
+                flexDirection: 'row',
+                justifyContent: "center",
+                alignItems: 'center',
                 backgroundColor: "#757575",
                 borderRadius: 30
             },
@@ -41,25 +42,32 @@ class SearchBar extends Component {
             },
             buttonRaisedStyle: {
                 marginLeft: 20
-            }
+            },
+            textField: {
+                width: 200,
+            },
         }
 
         return (
-            <div style={styles.divStyle}>
-                {/* <SelectField
-                    hintText="Choose your category"
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                    style={fieldStyle}
+            <div style={styles.container}>
+                <TextField
+                    id="search-input"
+                    label="What are you looking for ?"
+                    placeholder="What are you looking for ?"
+                    style={styles.textField}
+                    margin="normal"
+                    value={this.props.value}
+                    onChange={e => this.props.onChange(e.target.value)}
+                    //errorText={this.props.errorText}
+                />
+                <Button
+                    color="primary"
+                    variant="raised"
+                    onClick={e => this.props.onClick(e)}
+                    style={styles.buttonRaisedStyle}
                 >
-                    {
-                        genres.map(genre => 
-                            <MenuItem value={genre.name} key={genre.id} primaryText={genre.name}/>
-                        )
-                    }
-                </SelectField> */}
-                <TextField floatingLabelText="What are you looking for ?" hintText="What are you looking for ?" onChange={e => this.props.onChange(e.target.value)} style={styles.fieldStyle} value={this.props.value} errorText={this.props.errorText}/>
-                <RaisedButton label="Go get it Bobby!" primary onClick={e => this.props.onClick(e)} style={styles.buttonRaisedStyle}/>
+                Go get it Bobby!
+                </Button>
             </div>
         );
     }
@@ -81,4 +89,4 @@ class SearchBar extends Component {
  */
 
 
-export default SearchBar;
+export default SearchBar
