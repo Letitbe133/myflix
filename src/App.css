@@ -4,16 +4,21 @@
   justify-content: flex-start;
   align-items: stretch;
   min-height: 100vh;
-  background: url('./movie_bg.jpeg') no-repeat center center fixed; 
+  background-color: black;
+  -webkit-background-color: black;
+  -moz-background-color: black;
+  -o-background-color: black;
+  /* background: url('./movie_bg.jpeg') no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
+  background-size: cover; */
 }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 50px;
+  margin-right: 20px;
 }
 
 @keyframes App-logo-spin {

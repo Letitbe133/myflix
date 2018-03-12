@@ -1,44 +1,68 @@
 import React, { Component } from 'react'
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
+import Card, { CardContent, CardMedia } from 'material-ui/Card'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
+import IconButton from 'material-ui/IconButton';
+import FavoriteBorder from 'material-ui-icons/FavoriteBorder'
+import Favorite from 'material-ui-icons/Favorite'
+import Theaters from 'material-ui-icons/Theaters'
 
 import './index.css'
 
 class MovieList extends Component {
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      isLiked: false,
+    }
+
+    this.handleLike = this.handleLike.bind(this)
+    this.handleDetails = this.handleDetails.bind(this)
+
+  }
+
+  handleLike() {
+    (this.state.isLiked) ? this.setState({isLiked: false}) : this.setState({isLiked: true})
+  }
+
+  handleDetails() {
+    alert('click')
+  }
+
   render() {
 
     const { query, tmdb, queryResults } = this.props
 
-    // const stylesOld = {
-    //   width: "70%",
-    //   marginTop: 20,
-    //   marginBottom: 20,
-    //   marginLeft: "auto",
-    //   marginRight: "auto"
-    // }
-
-    // const buttonStyle = {
-    //   margin: 10
-    // }
-
     const styles = {
       card: {
         maxWidth: 345,
+        marginBottom: 20
+      },
+      cardItems: {
+        marginBottom: 10
       },
       media: {
         height: 485,
-      },
+      }
     }
 
     return (
       <div id="movie" className={!!queryResults.length ? "MovieDisplay-visible" : "MovieDisplay-none" }>
-        <h3>You searched for "{query}". Retrieving data from <a href={tmdb} target="blank">The Movie Database...</a></h3>
+        {/* <h3>You searched for "{query}". Retrieving data from <a href={tmdb} target="blank">The Movie Database...</a></h3> */}
         <div>
         {
           queryResults.map(item => (
             <Card style={styles.card} key={item.id}>
+            <IconButton onClick={this.handleLike}>
+              {(this.state.isLiked) ? <Favorite /> : <FavoriteBorder />}
+            </IconButton >
+            <IconButton onClick={e => this.props.onClick(item.id)}>
+              <Theaters />
+            </IconButton >
+
+            
             { item.poster_path ? 
               <CardMedia
                 style={styles.media}
@@ -48,33 +72,16 @@ class MovieList extends Component {
               null
             }
               <CardContent>
-                <Typography variant="headline" component="h2">
+                <Typography variant="headline" component="h2" style={styles.cardItems}>
                   {`Original title : ${item.title}`}
                 </Typography>
-                <Typography component="p">
+                <Typography component="p" style={styles.cardItems}>
                   {`Release date : ${item.release_date}`}
                 </Typography>
-                <Typography component="p">
+                <Typography component="p" style={styles.cardItems}>
                   {(item.overview === "") ? "No overview to be displayed" : item.overview }
                 </Typography>
               </CardContent>
-              <CardActions>
-                <Button
-                  size="small"
-                  color="primary"
-                  variant="raised"
-                  onClick={e => this.props.onClick(item.id)}
-                >
-                  Details
-                </Button>
-                <Button
-                  size="small"
-                  color="primary"
-                  variant="raised"
-                >
-                Add to My Flix
-                </Button>
-              </CardActions>
             </Card>
           )
         )

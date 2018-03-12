@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
+import Grid from 'material-ui/Grid'
 
 // import SelectField from 'material-ui/SelectField';
 // import MenuItem from 'material-ui/MenuItem';
@@ -27,14 +28,13 @@ class SearchBar extends Component {
 
         const styles = {
             container: {
-                width: "70%",
-                padding: 20,
-                display: "flex",
-                flexDirection: 'row',
-                justifyContent: "center",
-                alignItems: 'center',
-                backgroundColor: "#757575",
-                borderRadius: 30
+                // width: "70%",
+                padding: 10,
+                // display: "flex",
+                // flexDirection: 'row',
+                // justifyContent: "center",
+                // alignItems: 'center',
+                backgroundColor: "#757575"
             },
             fieldStyle: {
                 marginLeft: 10,
@@ -46,29 +46,36 @@ class SearchBar extends Component {
             textField: {
                 width: 200,
             },
+            centerAlign: {
+                textAlign: 'center'
+            }
         }
 
         return (
-            <div style={styles.container}>
-                <TextField
-                    id="search-input"
-                    label="What are you looking for ?"
-                    placeholder="What are you looking for ?"
-                    style={styles.textField}
-                    margin="normal"
-                    value={this.props.value}
-                    onChange={e => this.props.onChange(e.target.value)}
-                    //errorText={this.props.errorText}
-                />
-                <Button
-                    color="primary"
-                    variant="raised"
-                    onClick={e => this.props.onClick(e)}
-                    style={styles.buttonRaisedStyle}
-                >
-                Go get it Bobby!
-                </Button>
-            </div>
+            <Grid container spacing={24} justify="center" alignContent="center" alignItems="baseline" style={styles.container}>
+                    <Grid item xs={12} lg  style={styles.centerAlign}>
+                        <TextField
+                            id="search-input"
+                            label="What are you looking for ?"
+                            placeholder="What are you looking for ?"
+                            margin="normal"
+                            value={this.props.value}
+                            onChange={e => this.props.onChange(e.target.value)}
+                            error={this.props.error}
+                            //errorText={this.props.errorText}
+                        />
+                    </Grid>
+                    <Grid item xs={12} lg  style={styles.centerAlign}>
+                        <Button
+                            color="primary"
+                            variant="raised"
+                            onClick={e => this.props.onClick(e)}
+                            // style={styles.buttonRaisedStyle}
+                        >
+                        Go get it Bobby!
+                        </Button>
+                    </Grid>
+            </Grid>
         );
     }
 }

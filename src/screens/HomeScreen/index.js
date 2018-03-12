@@ -18,7 +18,8 @@ class HomeScreen extends Component {
       queryResults: [],
       details: [],
       genres: [],
-      errorText: ""
+      error: false,
+      display: false
     };
 
     this.setQuery = this.setQuery.bind(this);
@@ -53,31 +54,30 @@ class HomeScreen extends Component {
     const { query } = this.state
 
     if (!!query.length) {
-      console.log("query not empty", query)
-      const url = `${this.state.endpoint}search/movie?api_key=${this.state.apiKey}&query=${query}`
+      // console.log("query not empty", query)
+      const url = `${this.state.endpoint}search/movie?api_key=${this.state.apiKey}&query=${query}&include_adult=false`
       fetch(url)
         .then(response => response.json())
         .then(data => {
           console.log('data', data)
           if (!!data.results.length) {
-            this.setState({queryResults: data.results})
+            this.setState({queryResults: data.results, query: ""})
           }
         })
         .catch(err => console.log('err', err))  
     } else {
-      console.log("error empty")
       this.setState({
-        errorText: "This field cannot be empty"
+        error: true
       })
     }
   }
 
   onShowDetails(id) {
-    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${this.state.apiKey}`
+    const url = `${this.state.endpoint}movie/${id}?api_key=${this.state.apiKey}&include_adult=false`
     fetch(url)
       .then(response => response.json())
       .then(data => {
-          this.setState({details: data})
+          this.setState({details: data, display: true})
       })
       .catch(err => console.log('err', err))
   }
@@ -90,7 +90,7 @@ class HomeScreen extends Component {
           onChange={this.setQuery}
           genres={this.state.genres}
           value={this.state.query}
-          errorText={this.state.errorText}
+          error={this.state.error}
         />
         <MovieList
           query={this.state.query}
@@ -98,6 +98,11 @@ class HomeScreen extends Component {
           queryResults={this.state.queryResults}
           onClick={this.onShowDetails}
         />
+        <MovieSingle
+          details={this.state.details}
+          display={this.state.display}
+        />
+
       </div>
     );
   }
