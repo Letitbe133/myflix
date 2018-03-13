@@ -2,6 +2,7 @@
   "name": "myflix",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "material-ui": "^1.0.0-beta.36",
     "material-ui-icons": "^1.0.0-beta.36",
