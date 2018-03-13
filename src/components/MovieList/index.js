@@ -6,6 +6,7 @@ import IconButton from 'material-ui/IconButton';
 import FavoriteBorder from 'material-ui-icons/FavoriteBorder'
 import Favorite from 'material-ui-icons/Favorite'
 import Theaters from 'material-ui-icons/Theaters'
+import Snackbar from 'material-ui/Snackbar';
 
 import './index.css'
 
@@ -16,6 +17,9 @@ class MovieList extends Component {
 
     this.state = {
       isLiked: false,
+      open: false,
+      vertical: null,
+      horizontal: null
     }
 
     this.handleLike = this.handleLike.bind(this)
@@ -24,7 +28,7 @@ class MovieList extends Component {
   }
 
   handleLike() {
-    (this.state.isLiked) ? this.setState({isLiked: false}) : this.setState({isLiked: true})
+    (this.state.isLiked) ? this.setState({isLiked: false, open: true, vertical: 'top', horizontal: 'center'}) : this.setState({isLiked: true})
   }
 
   handleDetails() {
@@ -34,6 +38,7 @@ class MovieList extends Component {
   render() {
 
     const { query, tmdb, queryResults } = this.props
+    const { vertical, horizontal, open } = this.state;
 
     const styles = {
       card: {
@@ -45,12 +50,24 @@ class MovieList extends Component {
       },
       media: {
         height: 485,
+      },
+      snack: {
+        backgroundColor: "black",
+        textAlign: "center",
+        color: "white"
       }
     }
 
     return (
       <div id="movie" className={!!queryResults.length ? "MovieDisplay-visible" : "MovieDisplay-none" }>
         {/* <h3>You searched for "{query}". Retrieving data from <a href={tmdb} target="blank">The Movie Database...</a></h3> */}
+        {(this.state.isLiked) ? 
+          <Snackbar
+            anchorOrigin={{ vertical, horizontal }}
+            open={open}
+            message={<span id="message-id">Added to your flix</span>}
+            style={styles.snack}
+          /> : null}
         <div>
         {
           queryResults.map(item => (
