@@ -28,13 +28,8 @@ class SearchBar extends Component {
 
         const styles = {
             container: {
-                // width: "70%",
                 padding: 10,
-                // display: "flex",
-                // flexDirection: 'row',
-                // justifyContent: "center",
-                // alignItems: 'center',
-                backgroundColor: "#757575"
+                backgroundColor: "#757575",
             },
             fieldStyle: {
                 marginLeft: 10,
@@ -52,29 +47,33 @@ class SearchBar extends Component {
         }
 
         return (
-            <Grid container spacing={24} justify="center" alignContent="center" alignItems="baseline" style={styles.container}>
-                    <Grid item xs={12} lg  style={styles.centerAlign}>
-                        <TextField
-                            id="search-input"
-                            label="What are you looking for ?"
-                            placeholder="What are you looking for ?"
-                            margin="normal"
-                            value={this.props.value}
-                            onChange={e => this.props.onChange(e.target.value)}
-                            error={this.props.error}
-                            //errorText={this.props.errorText}
-                        />
+            <Grid container justify="center">
+                <Grid item xs={12} lg={8} style={styles.centerAlign}>
+                    <Grid container spacing={24} justify="center" alignContent="center" alignItems="baseline" style={styles.container}>
+                        <Grid item xs={12} lg  style={styles.centerAlign}>
+                            <TextField
+                                id="search-input"
+                                label="What are you looking for ?"
+                                placeholder="What are you looking for ?"
+                                margin="normal"
+                                value={this.props.value}
+                                onChange={e => this.props.onChange(e.target.value)}
+                                error={this.props.error}
+                                //errorText={this.props.errorText}
+                            />
+                        </Grid>
+                        <Grid item xs={12} lg  style={styles.centerAlign}>
+                            <Button
+                                color="primary"
+                                variant="raised"
+                                onClick={e => this.props.onClick(e)}
+                                // style={styles.buttonRaisedStyle}
+                            >
+                            Go get it Bobby!
+                            </Button>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} lg  style={styles.centerAlign}>
-                        <Button
-                            color="primary"
-                            variant="raised"
-                            onClick={e => this.props.onClick(e)}
-                            // style={styles.buttonRaisedStyle}
-                        >
-                        Go get it Bobby!
-                        </Button>
-                    </Grid>
+                </Grid>
             </Grid>
         );
     }
